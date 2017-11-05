@@ -19,11 +19,12 @@ class TestGame(unittest.TestCase):
             CROSS, CROSS, CIRCLE,
         ]
 
-    @unittest.skip("later")
     def test_is_finished(self):
         g = Game()
+        g.judge()
         self.assertFalse(g.finished)
         g2 = Game(self.scene)
+        g2.judge()
         self.assertTrue(g2.finished)
 
     def test_judge_0(self):

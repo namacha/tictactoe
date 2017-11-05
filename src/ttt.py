@@ -142,17 +142,17 @@ class Game(object):
         c_circle = self._is_winner(CIRCLE)
         if c_cross > 1 or c_circle > 1:
             situation = Summary.INVALID
-        elif self.is_full():
-            situation = Summary.DRAW
-            self._finished = True
-        elif c_cross == 0 and c_circle == 0:
-            situation = Summary.NOT_FINISHED
         elif c_cross == 1:
             situation = Summary.CROSS_WINS
             self._finished = True
         elif c_circle == 1:
             situation = Summary.CIRCLE_WINS
             self._finished = True
+        elif self.is_full():
+            situation = Summary.DRAW
+            self._finished = True
+        elif c_cross == 0 and c_circle == 0:
+            situation = Summary.NOT_FINISHED
        
         return situation
 
