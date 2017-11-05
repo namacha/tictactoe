@@ -15,9 +15,9 @@ class Board(object):
         self.board = [EMPTY for _ in range(9)] if board is None else board
 
     def _validate_pos(self, row, col):
-        if row < 0 or row > 8:
+        if row < 0 or row > 3:
             raise ValueError
-        if col < 0 or col > 8:
+        if col < 0 or col > 3:
             raise ValueError
 
     def row(self, n):
