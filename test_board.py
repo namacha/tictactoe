@@ -43,18 +43,18 @@ class TestBoard(unittest.TestCase):
 
     def test_row_invalid(self):
         b = Board()
-        self.assertRaises(ValueError, lambda: b.row(-1))
-        self.assertRaises(ValueError, lambda: b.row(4))
+        self.assertRaises(ValueError, b.row, -1)
+        self.assertRaises(ValueError, b.row, 4)
 
     def test_col_invalid(self):
         b = Board()
-        self.assertRaises(ValueError, lambda: b.col(-1))
-        self.assertRaises(ValueError, lambda: b.col(4))
+        self.assertRaises(ValueError, b.col, -1)
+        self.assertRaises(ValueError, b.col, 4)
 
     def test_diag_invalid(self):
         b = Board()
-        self.assertRaises(ValueError, lambda: b.diag(-1))
-        self.assertRaises(ValueError, lambda: b.diag(2))
+        self.assertRaises(ValueError, b.diag, -1)
+        self.assertRaises(ValueError, b.diag, 2)
 
 
 

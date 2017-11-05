@@ -21,14 +21,20 @@ class Board(object):
         return True
 
     def row(self, n):
+        if n < 0 or n > 2:
+            raise ValueError
         return self.board[n*3:n*3+3]
 
     def col(self, n):
+        if n < 0 or n > 2:
+            raise ValueError
         return self.board[n::3]
 
     def diag(self, n):
+        if n < 0 or n > 1:
+            raise ValueError
         if n == 0:
-            return self.board[::4]
+             return self.board[::4]
         if n == 1:
             return self.board[2:-1:2]
 
