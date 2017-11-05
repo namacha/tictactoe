@@ -51,6 +51,16 @@ class TestGame(unittest.TestCase):
         self.assertEqual(g.judge(), Summary.CIRCLE_WINS)
         self.assertTrue(g.finished)
 
+    def test_judge_draw(self):
+        scene = [
+            CROSS, CROSS, CIRCLE,
+            CIRCLE, CIRCLE, CROSS,
+            CROSS, CIRCLE, CROSS,
+        ]
+        g = Game(scene)
+        self.assertEqual(g.judge(), Summary.DRAW)
+        self.assertTrue(g.finished)
+
     def test_judge_invalid_0(self):
         scene = [
             CROSS, CIRCLE, CROSS,
