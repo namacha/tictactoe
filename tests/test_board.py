@@ -44,8 +44,8 @@ class TestBoard(unittest.TestCase):
     def test_is_full(self):
         b = Board([CROSS for _ in range(9)])
         self.assertTrue(b.is_full())
-        b = Board()
-        self.assertFalse(b.is_full())
+        b2 = Board()
+        self.assertFalse(b2.is_full())
 
     def test_put_cross(self):
         b = Board()
