@@ -14,11 +14,13 @@ class Board(object):
     def __init__(self, board=None):
         self.board = [EMPTY for _ in range(9)] if board is None else board
 
-    def _validate_pos(self, row, col):
-        if row < 0 or row > 3:
+    @staticmethod
+    def _validate_pos(row, col):
+        if row < 0 or row > 2:
             raise ValueError
-        if col < 0 or col > 3:
+        if col < 0 or col > 2:
             raise ValueError
+        return True
 
     def row(self, n):
         if n < 0 or n > 2:

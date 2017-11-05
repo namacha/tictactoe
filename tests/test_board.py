@@ -19,6 +19,12 @@ class TestBoard(unittest.TestCase):
             CIRCLE, CROSS, EMPTY,
         ]
 
+    def test_validate_pos(self):
+        self.assertTrue(Board._validate_pos(0, 0))
+        self.assertTrue(Board._validate_pos(2, 2))
+        self.assertRaises(ValueError, Board._validate_pos, -1, 0)
+        self.assertRaises(ValueError, Board._validate_pos, 0, 3)
+
     def test_init_board(self):
         """test initial board state"""
         board = Board()
