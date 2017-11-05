@@ -40,13 +40,6 @@ class Board(object):
         if n == 1:
             return self.board[2:-1:2]
 
-    def lines(self):
-        l = []
-        l.extend([self.row(i) for i in range(3)])
-        l.extend([self.col(i) for i in range(3)])
-        l.extend([self.diag(i) for i in range(2)])
-        return l
-
     def is_full(self):
         for i in range(9):
             if self.board[i] is EMPTY:
