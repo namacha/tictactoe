@@ -2,8 +2,8 @@
 
 
 EMPTY = '.'
-CROSS = 'o'
-CIRCLE = 'x'
+CROSS = 'x'
+CIRCLE = 'o'
 
 ROW = 3
 COL = 4
@@ -15,10 +15,11 @@ class Board(object):
     def __init__(self, board=None):
         self.board = [EMPTY for _ in range(9)] if board is None else board
 
-    def _validate_pos(self, pos):
-        if pos > 9:
-            raise ValueError('Index out of range')
-        return True
+    def _validate_pos(self, row, col):
+        if row < 0 or row > 8:
+            raise ValueError
+        if col < 0 or col > 8:
+            raise ValueError
 
     def row(self, n):
         if n < 0 or n > 2:
@@ -51,22 +52,22 @@ class Board(object):
                 return False
         return True
 
-    def is_exists(self, pos):
-        row, col = pos
+    def is_exists(self, row, col):
+        self._validate_pos(row, col)
         return self.board[row+col*3] is not EMPTY
     
-    def _put(self, pos, hand):
-        if self.is_exists(pos):
+    def _put(self, row, col, hand):
+        if self.is_exists(row, col):
             return False
-        row, col = pos
+        self._validate_pos(row, col)
         self.board[row+col*3] = hand
         return True
 
-    def put_cross(self, pos):
-        return self._put(pos, CROSS)
+    def put_cross(self, row, col):
+        return self._put(row, col, CROSS)
 
-    def put_circle(self, pos):
-        return self._put(pos, CIRCLE)
+    def put_circle(self, row, col):
+        return self._put(row, col, CIRCLE)
 
 
 class Game(object):

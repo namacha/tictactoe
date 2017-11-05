@@ -13,7 +13,7 @@ class TestBoard(unittest.TestCase):
     """Test class of ttt.Board"""
 
     def setUp(self):
-         self.scene = [
+        self.scene = [
             CIRCLE, CROSS, EMPTY,
             CIRCLE, CROSS, EMPTY,
             CIRCLE, CROSS, EMPTY,
@@ -41,6 +41,32 @@ class TestBoard(unittest.TestCase):
         self.assertEqual([CIRCLE, CROSS, EMPTY], b.diag(0))
         self.assertEqual([EMPTY, CROSS, CIRCLE], b.diag(1))
 
+    def test_is_full(self):
+        b = Board([CROSS for _ in range(9)])
+        self.assertTrue(b.is_full())
+        b = Board()
+        self.assertFalse(b.is_full())
+
+    def test_put_cross(self):
+        b = Board()
+        self.assertTrue(b.put_cross(1, 1))
+        self.assertEqual(b.board,
+                         [EMPTY, EMPTY, EMPTY, EMPTY, CROSS, EMPTY, EMPTY, EMPTY, EMPTY])
+        self.assertFalse(b.put_cross(1, 1))
+
+    def test_put_circle(self):
+        b = Board()
+        self.assertTrue(b.put_circle(1, 1))
+        self.assertEqual(b.board,
+                         [EMPTY, EMPTY, EMPTY, EMPTY, CIRCLE, EMPTY, EMPTY, EMPTY, EMPTY])
+        self.assertFalse(b.put_circle(1, 1))
+
+    def test_is_exists(self):
+        b = Board(self.scene)
+        self.assertTrue(b.is_exists(0, 0))
+        self.assertTrue(b.is_exists(1, 2))
+        self.assertFalse(b.is_exists(2, 0))
+
     def test_row_invalid(self):
         b = Board()
         self.assertRaises(ValueError, b.row, -1)
@@ -55,7 +81,6 @@ class TestBoard(unittest.TestCase):
         b = Board()
         self.assertRaises(ValueError, b.diag, -1)
         self.assertRaises(ValueError, b.diag, 2)
-
 
 
 if __name__ == '__main__':
