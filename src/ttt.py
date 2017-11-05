@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 EMPTY = '.'
 CROSS = 'x'
 CIRCLE = 'o'
@@ -70,10 +69,45 @@ class Board(object):
         return self._put(row, col, CIRCLE)
 
 
+class Summary(object):
+
+    CIRCLE_WINS = 'o_wins'
+    CROSS_WINS = 'x_wins'
+    DRAW = 'draw'
+    INVALID = 'invalid'
+    NOT_FINISHED = 'not_finished'
+
+    LINE_ROW_0 = 'row0'
+    LINE_ROW_1 = 'row1'
+    LINE_ROW_2 = 'row2'
+    LINE_COL_0 = 'col0'
+    LINE_COL_1 = 'col1'
+    LINE_COL_2 = 'col2'
+    LINE_DIAG_0 = 'diag0'
+    LINE_DIAG_1 = 'diag1'
+
+    ROWS = {
+        0: LINE_ROW_0,
+        1: LINE_ROW_1,
+        2: LINE_ROW_2,
+    }
+
+    COLS = {
+        0: LINE_COL_0,
+        1: LINE_COL_1,
+        2: LINE_COL_2,
+    }
+
+    DIAGS = {
+        0: LINE_DIAG_0,
+        1: LINE_DIAG_1,
+    }
+
+
 class Game(object):
 
-    def __init__(self):
-        self.board = Board()
+    def __init__(self, board=None):
+        self._board = Board(board=board)
         self._finished = False
 
     @property
@@ -81,21 +115,43 @@ class Game(object):
         return self._finished
 
     def is_full(self):
-        return self.board.is_full()
+        return self._board.is_full()
 
-    def _check_hand_has_won(self, hand):
+    def _is_winner(self, hand):
+        count = 0
         for i in range(3):
-            line = self.board.row(i)
-            if self._is_all(line, hand):
-                return ROW, i
-            line = self.board.col(i)
-            if self._is_all(line, hand):
-                return COL, hand
-            if i < 2:
-                line = self.board.diag(i)
-                if self._is_all(line, hand):
-                    return DIAG, i
-        return False
+            row = self._board.row(i)
+            if self._is_all(row, hand):
+                count += 1
+
+            col = self._board.col(i)
+            if self._is_all(col, hand):
+                count += 1
+
+        if self._is_all(self._board.diag(0), hand):
+            count += 1
+
+        if self._is_all(self._board.diag(1), hand):
+            count += 1
+
+        return count
+
+    def judge(self):
+        """Judge and returns `Summary` of Game"""
+        c_cross = self._is_winner(CROSS)
+        c_circle = self._is_winner(CIRCLE)
+        if c_cross > 1 or c_circle > 1:
+            situation = Summary.INVALID
+        elif c_cross == 0 and c_circle == 0:
+            situation = Summary.NOT_FINISHED
+        elif c_cross == 1:
+            situation = Summary.CROSS_WINS
+            self._finished = True
+        elif c_circle == 1:
+            situation = Summary.CIRCLE_WINS
+            self._finished = True
+        
+        return situation
 
     @staticmethod
     def _is_all(arr, value):
